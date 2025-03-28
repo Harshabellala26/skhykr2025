@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ commodity }} Predictions</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            padding: 20px;
+            position: relative;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        .commodity-header {
+            flex: 1;
+        }
+        .commodity-image-container {
+            width: 300px;
+            height: 200px;
+            margin-top: 30px;
+            margin-left: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 1px solid #eee;
+        }
+        .commodity-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        h1 { 
+            color: #2c3e50; 
+            margin-top: 0;
+        }
+        .back-btn { 
+            display: inline-block;
+            margin-bottom: 20px; 
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+        table{ 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 20px; 
+        }
+        th,td { 
+            padding: 12px; 
+            text-align: center; 
+            border-bottom: 1px solid #ddd; 
+        }
+        th { 
+            background-color: #3498db; 
+            color: white; 
+        }
+        tr:nth-child(even) { 
+            background-color: #f2f2f2; 
+        }
+        .highlight { 
+            font-weight: bold; 
+            color: #27ae60; 
+        }
+        .info { 
+            margin: 20px 0; 
+            padding: 15px; 
+            background: #e8f4fc; 
+            border-radius: 4px; 
+        }
+        .price-summary {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-container">
+        <div class="commodity-header">
+            <a href="/" class="back-btn">← Back to Commodities</a>
+            <h1>{{ commodity }} PRICE PREDICTION</h1>
+            
+            <div class="price-summary">
+                <h3>Next 12 months forecast (WPI converted to actual prices)</h3>
+            </div>
+        </div>
+        
+        <div class="commodity-image-container">
+            <img src="{{ url_for('static', filename='images/' + commodity_info.image) }}" 
+                 alt="{{ commodity }}" class="commodity-image">
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Month/Year</th>
+                <!-- <th>Rainfall (mm)</th>
+                <th>Predicted WPI</th> -->
+                <th>Predicted Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pred in predictions %}
+            <tr>
+                <td>{{ pred.month }}/{{ pred.year }}</td>
+                <!-- <td>{{ pred.rainfall }}</td>
+                <td>{{ pred.wpi }}</td> -->
+                <td class="highlight">₹{{ pred.price }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

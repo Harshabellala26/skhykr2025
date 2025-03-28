@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Commodity Price Prediction</title>
+    <style>
+        body { 
+            background-color: #87f58d;
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        footer{
+            text-align-last: center;
+        }
+        h1 {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    color: #2c3e50;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+    margin: 20px 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .commodity-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px; }
+        .commodity-card { 
+            background: #f9faf8; padding: 20px; 
+            border-radius: 8px; text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .commodity-card:hover { transform: translateY(-5px); }
+        .commodity-card form { margin: 0; }
+        .commodity-image {
+            width: 250px;
+            height: 150px;
+            object-fit: cover;
+            /* border-radius: 50%; */
+            margin-bottom: 10px;
+        }
+        button { 
+            background: #3498db; color: white; 
+            border: none; padding: 10px 20px;
+            border-radius: 4px; cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover { background: #2980b9; }
+    </style>
+</head>
+<body>
+    <h1>Select Commodity</h1>
+    <div class="commodity-list">
+        {% for commodity_name, commodity_data in commodities.items() %}
+        <div class="commodity-card">
+            <form action="/predict" method="post">
+                <input type="hidden" name="commodity" value="{{ commodity_name }}">
+                <img src="{{ url_for('static', filename='images/' + commodity_data.image) }}" 
+                alt="{{ commodity_name }}" class="commodity-image">
+                <h2>{{ commodity_name.capitalize() }}</h2>
+                <button type="submit">View Predictions</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+    <br>
+</body>
+<footer>
+    <h3>Project By</h3>
+    <p><b><h4>Harsha</h4>
+        <h4>Shreya</h4>
+        <h4>Sarika</h4>
+    </b></p>
+</footer>
+</html>
